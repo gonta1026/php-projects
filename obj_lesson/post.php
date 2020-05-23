@@ -66,9 +66,3 @@ class PremiumPost extends BasePost implements LikeInterface
     printf('%s [%d円 JPY] (%d)' . PHP_EOL, $this->text, $this->price, $this->likes);
   }
 }
-
-function prosessPost(BasePost $post)
-{
-  $post->show();
-}
-

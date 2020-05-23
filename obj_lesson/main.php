@@ -1,7 +1,10 @@
 <?php
 
-require "post.php";
+// require "post.php";
 
+spl_autoload_register(function ($class){
+  require($class .".php");
+});
 $posts = [];
 $posts[0] = new Post('hello');
 $posts[0]->like();
@@ -11,6 +14,10 @@ $posts[2] = new SponsoredPost('親のプロパティにアクセスしてやっ�
 $posts[3] = new PremiumPost("金額", 1000);
 $posts[3]->like();
 
+function prosessPost(BasePost $post)
+{
+  $post->show();
+}
 foreach ($posts as $post) {
   prosessPost($post);
 }

@@ -24,11 +24,16 @@ class Todo
     }
   }
 
-  private function _createToken()
+  private function _createToken()//トークンを作っているがワンタイムではない。。
   {
     if (!isset($_SESSION['token'])) {
       $_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(16));
     }
+  }
+  private function pdoExecute($sql, $ele = null) //executeをまとめてみた。
+  {
+    $stmt = $this->_db->prepare($sql);
+    $stmt->execute($ele);
   }
 
   public function getAll()
@@ -75,8 +80,7 @@ class Todo
     $this->_db->beginTransaction();
 
     $sql = sprintf("update todos set state = (state + 1) %% 2 where id = %d", $_POST['id']);
-    $stmt = $this->_db->prepare($sql);
-    $stmt->execute();
+    $this->pdoExecute($sql);
 
     $sql = sprintf("select state from todos where id = %d", $_POST['id']);
     $stmt = $this->_db->query($sql);
@@ -96,8 +100,10 @@ class Todo
     }
 
     $sql = "insert into todos (title) values (:title)";
-    $stmt = $this->_db->prepare($sql);
-    $stmt->execute([':title' => $_POST['title']]);
+    $title = [':title' => $_POST['title']];
+    $this->pdoExecute($sql, $title);
+    // $stmt = $this->_db->prepare($sql, $title);
+    // $stmt->execute([':title' => $_POST['title']]);
 
     return [
       'id' => $this->_db->lastInsertId()
@@ -109,11 +115,8 @@ class Todo
     if (!isset($_POST['id'])) {
       throw new \Exception('[delete] id not set!');
     }
-
     $sql = sprintf("delete from todos where id = %d", $_POST['id']);
-    $stmt = $this->_db->prepare($sql);
-    $stmt->execute();
-
+    $this->pdoExecute($sql);
     return [];
   }
 }

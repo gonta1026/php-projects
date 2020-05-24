@@ -1,20 +1,12 @@
 <?php
 
-// CSRF対策
-// Token発行してSessionに格納
-// フォームからもTokenを発行、送信
-// Check
-
 namespace MyApp;
-
 class Todo
 {
   private $_db;
-
   public function __construct()
   {
     $this->_createToken();
-
     try {
       $this->_db = new \PDO(DSN, DB_USERNAME, DB_PASSWORD);
       $this->_db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
@@ -30,11 +22,6 @@ class Todo
       $_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(16));
     }
   }
-  private function pdoExecute($sql, $ele = null) //executeをまとめてみた。
-  {
-    $stmt = $this->_db->prepare($sql);
-    $stmt->execute($ele);
-  }
 
   public function getAll()
   {
@@ -49,15 +36,8 @@ class Todo
     if (!isset($_POST['mode'])) {
       throw new \Exception('mode not set!');
     }
-
-    switch ($_POST['mode']) {
-      case 'update':
-        return $this->_update();
-      case 'create':
-        return $this->_create();
-      case 'delete':
-        return $this->_delete();
-    }
+    $mode = $_POST['mode'];//switch文を使っていたが可変関数で対応
+    return $this->$mode();
   }
 
   private function _validateToken()
@@ -71,7 +51,7 @@ class Todo
     }
   }
 
-  private function _update()
+  private function update()
   {
     if (!isset($_POST['id'])) {
       throw new \Exception('[update] id not set!');
@@ -80,7 +60,7 @@ class Todo
     $this->_db->beginTransaction();
 
     $sql = sprintf("update todos set state = (state + 1) %% 2 where id = %d", $_POST['id']);
-    $this->pdoExecute($sql);
+    pdoExecute($this->_db, $sql);
 
     $sql = sprintf("select state from todos where id = %d", $_POST['id']);
     $stmt = $this->_db->query($sql);
@@ -93,7 +73,7 @@ class Todo
     ];
   }
 
-  private function _create()
+  private function create()
   {
     if (!isset($_POST['title']) || $_POST['title'] === '') {
       throw new \Exception('[create] title not set!');
@@ -101,22 +81,19 @@ class Todo
 
     $sql = "insert into todos (title) values (:title)";
     $title = [':title' => $_POST['title']];
-    $this->pdoExecute($sql, $title);
-    // $stmt = $this->_db->prepare($sql, $title);
-    // $stmt->execute([':title' => $_POST['title']]);
-
+    pdoExecute($this->_db, $sql, $title);
     return [
       'id' => $this->_db->lastInsertId()
     ];
   }
 
-  private function _delete()
+  private function delete()
   {
     if (!isset($_POST['id'])) {
       throw new \Exception('[delete] id not set!');
     }
     $sql = sprintf("delete from todos where id = %d", $_POST['id']);
-    $this->pdoExecute($sql);
+    pdoExecute($this->_db, $sql);
     return [];
   }
 }

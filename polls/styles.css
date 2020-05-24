@@ -31,9 +31,9 @@ h1 {
   margin-left: 10px;
 }
 
-#box_0 { background: url('photo_0.jpg'); }
-#box_1 { background: url('photo_1.jpg'); }
-#box_2 { background: url('photo_2.jpg'); }
+#box_0 { background: url('/img/photo_0.jpg'); }
+#box_1 { background: url('/img/photo_1.jpg'); }
+#box_2 { background: url('/img/photo_2.jpg'); }
 
 .selected {
   opacity: 1.0;

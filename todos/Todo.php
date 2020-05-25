@@ -36,8 +36,8 @@ class Todo
     if (!isset($_POST['mode'])) {
       throw new \Exception('mode not set!');
     }
-    $mode = $_POST['mode'];//switch文を使っていたが可変関数で対応
-    return $this->$mode();
+    $mode = $_POST['mode'];
+    return $this->$mode();//switch文を使っていたが可変関数で対応し冗長さを無くした。
   }
 
   private function _validateToken()

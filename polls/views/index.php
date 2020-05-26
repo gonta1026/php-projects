@@ -15,9 +15,11 @@
       <input type="hidden" name="token" value="<?= h($_SESSION['token']); ?>">
     </div>
     <div id="btn">Vote and See Results</div>
+    <div>
+      <a href="/result.php">結果の画面に移動する</a>
+    </div>
   </form>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="script.js"></script>
 </body>
-
 </html>

@@ -5,7 +5,7 @@ namespace MyApp;
 class Poll
 {
   private $_db;
-
+  private $menue_conunts = 3;
   public function __construct()
   {
     $this->_connectDB();
@@ -82,11 +82,10 @@ class Poll
 
   private function _validateAnswer()
   {
-    // var_dump($_POST);
-    // exit;
+    
     if (
       !isset($_POST['answer']) ||
-      !in_array($_POST['answer'], [0, 1, 2])
+      !in_array($_POST['answer'], range(0, $this->menue_conunts -1))
     ) {
       throw new \Exception('invalid answer!');
     }
@@ -104,11 +103,10 @@ class Poll
 
     try {
       $stmt->execute();
-    } catch (\PDOException $e) {
+    } catch (\PDOException $e) {//データベースの更新に失敗したら
       throw new \Exception('No more vote for today!');
     }
-    // exit;
+    exit;
   }
-
-
 }
+

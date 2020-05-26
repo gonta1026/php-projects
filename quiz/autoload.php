@@ -1,6 +1,7 @@
 <?php
 
 spl_autoload_register(function ($class) {
+  // var_ex
   $prefix = 'MyApp\\';
 
   if (strpos($class, $prefix) === 0) {

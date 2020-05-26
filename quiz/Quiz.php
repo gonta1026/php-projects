@@ -2,12 +2,13 @@
 
 namespace MyApp;
 
-class Quiz
+class Quiz extends Question
 {
   private $_quizSet = [];
-
+  private $shuffle_num = [];
   public function __construct()
   {
+
     $this->_setup();
     Token::create();
 
@@ -15,7 +16,9 @@ class Quiz
       $this->_initSession();
     }
   }
-
+  private function initialNum(){
+    $this->shuffle_num = [0,1,2];
+  }
   private function _initSession()
   {
     $_SESSION['current_num'] = 0;
@@ -25,7 +28,7 @@ class Quiz
   public function checkAnswer()
   {
     Token::validate('token');
-    $correctAnswer = $this->_quizSet[$_SESSION['current_num']]['a'][0];
+    $correctAnswer = $this->_quizSet[$_SESSION['current_num']]['answer'][0];
     if (!isset($_POST['answer'])) {
       throw new \Exception('answer not set!');
     }
@@ -63,18 +66,9 @@ class Quiz
 
   private function _setup()
   {
-    $this->_quizSet = Question::getQuestion();
-    // [
-    //   'q' => 'What is A?',
-    //   'a' => ['A0', 'A1', 'A2', 'A3']
-    // ];
-    // $this->_quizSet[] = [
-    //   'q' => 'What is B?',
-    //   'a' => ['B0', 'B1', 'B2', 'B3']
-    // ];
-    // $this->_quizSet[] = [
-    //   'q' => 'What is C?',
-    //   'a' => ['C0', 'C1', 'C2', 'C3']
-    // ];
+    // $questions = parent::getQuestion();
+    // shuffle($questions);
+    $this->_quizSet = parent::getQuestion();
+    // session_destroy();
   }
 }

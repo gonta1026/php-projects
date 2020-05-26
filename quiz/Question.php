@@ -1,56 +1,28 @@
 <?php
 
 namespace MyApp;
-
 class Question
 {
-  static public function getQuestion()
+  static public function getQuestion()//ここにクイズで使う連想配列を追加すること。
   {
-     return [
+    $questions = [
       [
-        'q' => 'What is A?',
-        'a' => ['A0', 'A1', 'A2', 'A3']
+        'question' => 'What is A?',
+        'answer' => ['A0', 'A1', 'A2', 'A3']
       ],
+
       [
-        'q' => 'What is B?',
-        'a' => ['B0', 'B1', 'B2', 'B3']
+        'question' => 'What is B?',
+        'answer' => ['B0', 'B1', 'B2', 'B3']
       ],
+
       [
-        'q' => 'What is C?',
-        'a' => ['C0', 'C1', 'C2', 'C3']
+        'question' => 'What is C?',
+        'answer' => ['C0', 'C1', 'C2', 'C3']
       ]
     ];
+    return $questions;
   }
 }
 
-// $question01 = 
-// $question02 = 
-// $question03 = [
-// 'q' => 'What is C?',
-// 'a' => ['C0', 'C1', 'C2', 'C3']
-// ];
-
-$questions = [
-  [
-    'q' => 'What is A?',
-    'a' => ['A0', 'A1', 'A2', 'A3']
-  ],
-  [
-    'q' => 'What is B?',
-    'a' => ['B0', 'B1', 'B2', 'B3']
-  ],
-  [
-    'q' => 'What is C?',
-    'a' => ['C0', 'C1', 'C2', 'C3']
-  ]
-];
-// ];
-// $box = [];
-// foreach ($questions as $value) {
-//   array_push($box, $value);
-//   var_export($box);
-//   echo "<br />";
-// }
-
-// $nums = [1,2,3];
 ?>

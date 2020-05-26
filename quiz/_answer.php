@@ -6,6 +6,7 @@ $quiz = new MyApp\Quiz();
 
 try {
   $correctAnswer = $quiz->checkAnswer();
+  // var_dump($correctAnswer);
 } catch (Exception $e) {
   header($_SERVER['SERVER_PROTOCOL'] . ' 403 Forbidden', true, 403);
   echo $e->getMessage();

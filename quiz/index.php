@@ -1,13 +1,10 @@
 <?php
 
 require_once(__DIR__ . '/config.php');
-
 $quiz = new MyApp\Quiz();
-
 if (!$quiz->isFinished()) {
   $data = $quiz->getCurrentQuiz();
-  var_dump($data);
-  shuffle($data['a']);
+  shuffle($data['answer']);
 }
 ?>
 <!DOCTYPE html>
@@ -33,9 +30,9 @@ if (!$quiz->isFinished()) {
     <?php $quiz->reset(); ?>
   <?php else : ?>
     <div id="container">
-      <h1>Q. <?= h($data['q']); ?></h1>
+      <h1>Q. <?= h($data['question']); ?></h1>
       <ul>
-        <?php foreach ($data['a'] as $a) : ?>
+        <?php foreach ($data['answer'] as $a) : ?>
           <li class="answer"><?= h($a); ?></li>
         <?php endforeach; ?>
       </ul>

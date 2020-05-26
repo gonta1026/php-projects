@@ -2,7 +2,7 @@
 
 namespace App\PostSpace;
 
-trait LikeTrait
+trait LikeTrait //まとまった記述を書くことができる
 {
   private $likes = 0;
   public function like()

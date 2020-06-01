@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
-<?php include(__DIR__ . "/common/head.php") ?>
-
+  <?php include(__DIR__ . "/common/head.php") ?>
 <body>
   <div id="container">
     <h1>Todos</h1>
@@ -29,7 +28,6 @@
   </div>
   <input type="hidden" id="token" value="<?= h($_SESSION['token']); ?>">
   <?php include(__DIR__ . "/common/footer.php") ?>
-
 </body>
 
 </html>

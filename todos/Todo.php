@@ -37,7 +37,7 @@ class Todo
       throw new \Exception('mode not set!');
     }
     $mode = $_POST['mode'];
-    return $this->$mode();//switch文を使っていたが可変関数で対応し冗長さを無くした。
+    return $this->$mode();//switch文を使っていたが可変関数で対応し冗長さを無くした。(update, delete, createが渡ってくる)
   }
 
   private function _validateToken()
@@ -57,16 +57,15 @@ class Todo
       throw new \Exception('[update] id not set!');
     }
 
-    $this->_db->beginTransaction();
+    $this->_db->beginTransaction();//トランザクション始まり
 
     $sql = sprintf("update todos set state = (state + 1) %% 2 where id = %d", $_POST['id']);
-    pdoExecute($this->_db, $sql);
-
+    pdoExecute($this->_db, $sql);//更新
     $sql = sprintf("select state from todos where id = %d", $_POST['id']);
     $stmt = $this->_db->query($sql);
-    $state = $stmt->fetchColumn();
+    $state = $stmt->fetchColumn();//state取得
 
-    $this->_db->commit();
+    $this->_db->commit();//トランザクション終わり
 
     return [
       'state' => $state

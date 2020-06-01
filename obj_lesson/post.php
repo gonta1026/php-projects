@@ -11,19 +11,21 @@ trait LikeTrait //まとまった記述を書くことができる
   }
 }
 
+// 子クラスで実装を強制させる抽象クラス。子クラスでimplementsを使う。
 interface LikeInterface
 {
   public function like();
 }
 
+//抽象クラス（定義のみで実装はしてはいけない。）
 abstract class BasePost
 {
   protected $text;
-  
   public function __construct($text)
   {
     $this->text = $text;
   }
+  ///子クラスで必ず実装させるメソッド
   abstract public function show();
 }
 

@@ -1,20 +1,23 @@
 <?php
+// 名前空間
 use App\PostSpace;
+use App\PostSpace\BasePost;
+use App\PostSpace\Post;
+use App\PostSpace\SponsoredPost;
+use App\PostSpace\PremiumPost;
 require "post.php";
 
-// spl_autoload_register(function ($class){
-//   require($class .".php");
-// });
 $posts = [];
-$posts[0] = new PostSpace\Post('hello');
-// $posts[0]->like();
-$posts[1] = new PostSpace\Post('hello again');
-// $posts[1]->like();
-$posts[2] = new PostSpace\SponsoredPost('親のプロパティにアクセスしてやったぜ！', "keisei");
-$posts[3] = new PostSpace\PremiumPost("金額", 1000);
+$posts[0] = new Post('hello');
+$posts[0]->like();
+$posts[1] = new Post('hello again');
+$posts[1]->like();
+$posts[2] = new SponsoredPost('親のプロパティにアクセスしてやったぜ！', "keisei");
+$posts[3] = new PremiumPost("金額", 1000);
 $posts[3]->like();
 
-function prosessPost(PostSpace\BasePost $post)
+// BasePost型として実行する。
+function prosessPost(BasePost $post)
 {
   $post->show();
 }

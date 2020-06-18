@@ -12,12 +12,13 @@ $format = 'The %2$s contains %1$d monkeys.
            That\'s a nice %2$s full of %1$d monkeys. %3$s';
 echo sprintf($format, $num, $location);
 
-// %のあとの数字がindexになる。$04のところでけたの数字で指定している。
+// %のあとの数字がindexになる。$04のところで4けたの数字で指定している。
 $format = 'The %2$s contains %1$04d monkeys';
 echo sprintf($format, $num, $location);
 //output The tree contains 0005 monkeys
 
 
+//try！
 $what = "肉";
 $how = 5;
 $when = "今日";

@@ -1,5 +1,8 @@
 <?php
 
+// ----------------------------sprintf-------------------------------
+// sprintfは文字列のフォーマットにに使う
+
 $num = 5;
 $location = 'tree';
 
@@ -14,7 +17,6 @@ $format = 'The %2$s contains %1$04d monkeys';
 echo sprintf($format, $num, $location);
 //output The tree contains 0005 monkeys
 
-// ----------------------------try-------------------------------
 
 $what = "肉";
 $how = 5;
@@ -22,3 +24,4 @@ $when = "今日";
 $do = "たべた！";
 $format = "%sを%dつ%s%s";
 echo sprintf($format, $what, $how, $when, $do);
+

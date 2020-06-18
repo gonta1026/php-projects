@@ -60,3 +60,25 @@ var_export($matches);
 
 $input = preg_replace($pattern, '**-****-****', $input);//**-****-****に全て置換する。
 echo $input . PHP_EOL;
+
+
+/* -----------------------
+文字列と配列を相互に変換してみよう
+implode()
+explode()
+list()
+----------------------- */
+
+$d = [2020, 11, 15];
+// echo "$d[0]-$d[1]-$d[2]" . PHP_EOL;
+echo $s = implode('-', $d) . PHP_EOL;
+
+$t = '17:32:45';
+$t = "category01,category02,category03";
+$arr = explode(',', $t);
+// print_r($arr);
+list($c01, $c02, $c03) = $arr;
+var_dump($c01,$c02,$c03);
+
+
+

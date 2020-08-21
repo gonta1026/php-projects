@@ -2,73 +2,84 @@
 
 namespace MyApp;
 
-class Quiz extends Question
+use MyApp\ConstData;
+
+class Quiz
 {
   private $_quizSet = [];
-  private $shuffle_num = [];
+  private $perfect_corrent_num;
+
+  const TOKEN = 'token'; //定数を定義する
+
+  // echo self::TOKEN;
   public function __construct()
   {
-
-    $this->_setup();
+    if (!isset($_SESSION['perfect_corrent_num'])) {
+      $this->_initTotalCurrentNum();
+    }
+    $this->_setup(); // NOTE >>>>> 質問を全てセットする。
     Token::create();
-
     if (!isset($_SESSION['current_num'])) {
-      $this->_initSession();
+      $this->_initSession(); //NOTE sessionを初期化
     }
   }
-  private function initialNum(){
-    $this->shuffle_num = [0,1,2];
-  }
-  private function _initSession()
+
+  private function _setup(): void
   {
-    $_SESSION['current_num'] = 0;
-    $_SESSION['correct_count'] = 0;
+    $this->_quizSet = ConstData::QUESTION;
   }
 
-  public function checkAnswer()
+  private function _initSession(): void
   {
-    Token::validate('token');
+    $_SESSION['current_num'] = $_SESSION['correct_count'] = 0;
+  }
+
+  private function _initTotalCurrentNum(): void
+  {
+    $_SESSION['perfect_corrent_num'] = 0;
+  }
+
+  public function checkAnswer(): string
+  {
+    Token::validate();
     $correctAnswer = $this->_quizSet[$_SESSION['current_num']]['answer'][0];
     if (!isset($_POST['answer'])) {
       throw new \Exception('answer not set!');
     }
     if ($correctAnswer === $_POST['answer']) {
       $_SESSION['correct_count']++;
+      if ($_SESSION['correct_count'] === count($this->_quizSet)) {
+        $_SESSION['perfect_corrent_num']++;
+      }
     }
     $_SESSION['current_num']++;
     return $correctAnswer;
   }
 
-  public function isFinished()
+  public function isFinished(): int
   {
     return count($this->_quizSet) === $_SESSION['current_num'];
   }
 
-  public function getScore()
+  public function getScore(): int
   {
     return round($_SESSION['correct_count'] / count($this->_quizSet) * 100);
   }
 
-  public function isLast()
+  public function isLast(): int
   {
     return count($this->_quizSet) === $_SESSION['current_num'] + 1;
   }
 
-  public function reset()
+  public function reset(): void
   {
     $this->_initSession();
   }
 
-  public function getCurrentQuiz()
+  public function getCurrentQuiz(): array
   {
-    return $this->_quizSet[$_SESSION['current_num']];
-  }
-
-  private function _setup()
-  {
-    // $questions = parent::getQuestion();
-    // shuffle($questions);
-    $this->_quizSet = parent::getQuestion();
-    // session_destroy();
+    $current_quiz = $this->_quizSet[$_SESSION['current_num']];
+    shuffle($current_quiz["answer"]);
+    return $current_quiz;
   }
 }

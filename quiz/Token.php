@@ -2,21 +2,24 @@
 
 namespace MyApp;
 
+use MyApp\ConstData;
+use MyApp\Quiz;
+
 class Token
 {
-  static public function create()
+  static public function create() // NOTE   TOKEN作成
   {
-    if (!isset($_SESSION['token'])) {
-      $_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(16));
+    if (!isset($_SESSION[Quiz::TOKEN])) {
+      $_SESSION[ConstData::TOKEN] = bin2hex(openssl_random_pseudo_bytes(16));
     }
   }
 
-  static public function validate($tokenKey)
+  static public function validate()
   {
     if (
-      !isset($_SESSION['token']) ||
-      !isset($_POST[$tokenKey]) ||
-      $_SESSION['token'] !== $_POST[$tokenKey]
+      !isset($_SESSION[Quiz::TOKEN]) ||
+      !isset($_POST[Quiz::TOKEN]) ||
+      $_SESSION[Quiz::TOKEN] !== $_POST[Quiz::TOKEN]
     ) {
       throw new \Exception('invalid token!');
     }

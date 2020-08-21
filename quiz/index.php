@@ -4,8 +4,10 @@ require_once(__DIR__ . '/config.php');
 $quiz = new MyApp\Quiz();
 if (!$quiz->isFinished()) {
   $data = $quiz->getCurrentQuiz();
-  shuffle($data['answer']);
 }
+
+$token = $_SESSION[$quiz::TOKEN];
+$perfect_corrent_num = $_SESSION['perfect_corrent_num'];
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -29,6 +31,11 @@ if (!$quiz->isFinished()) {
     </div>
     <?php $quiz->reset(); ?>
   <?php else : ?>
+    <?php if ($perfect_corrent_num !== 0) : ?>
+      <p>全問正解数は<?php echo $perfect_corrent_num ?>回です</p>
+      <a href="/reset.php">リセット</a>
+      <!-- <p>全問正解数は<?php echo $perfect_corrent_num ?>回です</p> -->
+    <?php endif; ?>
     <div id="container">
       <h1>Q. <?= h($data['question']); ?></h1>
       <ul>
@@ -37,7 +44,7 @@ if (!$quiz->isFinished()) {
         <?php endforeach; ?>
       </ul>
       <div id="btn" class="disabled"><?= $quiz->isLast() ? 'Show Result' : 'Next Question'; ?></div>
-      <input type="hidden" id="token" value="<?= h($_SESSION['token']); ?>">
+      <input type="hidden" id="token" value="<?= h($token); ?>">
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="quiz.js"></script>

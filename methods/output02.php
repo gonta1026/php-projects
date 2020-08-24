@@ -1,5 +1,6 @@
 <?php
 
+// NOTE　長谷川さんに教えてもらったやり方だが理解しておらず一旦そのままにしている。
 interface iFilter
 {
 	public function addWhereCondition(): array;

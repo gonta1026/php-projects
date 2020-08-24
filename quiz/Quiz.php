@@ -7,7 +7,6 @@ use MyApp\ConstData;
 class Quiz
 {
   private $_quizSet = [];
-  private $perfect_corrent_num;
 
   const TOKEN = 'token'; //定数を定義する
 
@@ -81,5 +80,18 @@ class Quiz
     $current_quiz = $this->_quizSet[$_SESSION['current_num']];
     shuffle($current_quiz["answer"]);
     return $current_quiz;
+  }
+
+  public function export($file_name, $data)
+  {
+    $fp = fopen('php://output', 'w');
+    foreach ($data as $row) {
+      fputcsv($fp, $row, ',', '"');
+    }
+    fclose($fp);
+    header('Content-Type: application/octet-stream');
+    header("Content-Disposition: attachment; filename={$file_name}");
+    header('Content-Transfer-Encoding: binary');
+    exit;
   }
 }

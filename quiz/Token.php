@@ -10,7 +10,7 @@ class Token
   static public function create() // NOTE   TOKEN作成
   {
     if (!isset($_SESSION[Quiz::TOKEN])) {
-      $_SESSION[ConstData::TOKEN] = bin2hex(openssl_random_pseudo_bytes(16));
+      $_SESSION[Quiz::TOKEN] = bin2hex(openssl_random_pseudo_bytes(16));
     }
   }
 

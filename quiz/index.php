@@ -31,10 +31,13 @@ $perfect_corrent_num = $_SESSION['perfect_corrent_num'];
     </div>
     <?php $quiz->reset(); ?>
   <?php else : ?>
+    <form method="get" action="./download.php">
+      <input type="submit" name="btn_download" value="ダウンロード">
+    </form>
     <?php if ($perfect_corrent_num !== 0) : ?>
       <p>全問正解数は<?php echo $perfect_corrent_num ?>回です</p>
       <a href="/reset.php">リセット</a>
-      <!-- <p>全問正解数は<?php echo $perfect_corrent_num ?>回です</p> -->
+
     <?php endif; ?>
     <div id="container">
       <h1>Q. <?= h($data['question']); ?></h1>
